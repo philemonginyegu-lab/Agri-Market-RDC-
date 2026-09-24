@@ -7,35 +7,56 @@ st.set_page_config(
 )
 
 st.title("🌾 Agri Market RDC")
-st.subheader("La plateforme qui relie producteurs et acheteurs")
+st.subheader("🔎 Rechercher un produit")
 
-st.write(
-    "Trouvez des produits agricoles, publiez vos produits "
-    "et consultez les offres disponibles en RDC."
+st.write("Trouvez les produits agricoles disponibles près de vous.")
+
+# Recherche du produit
+produit = st.text_input(
+    "Quel produit recherchez-vous ?",
+    placeholder="Exemple : maïs, manioc, tomate..."
 )
 
-st.divider()
-
-st.header("Que voulez-vous faire ?")
-
-choix = st.radio(
-    "Sélectionnez une option :",
+# Choix de la ville
+ville = st.selectbox(
+    "📍 Dans quelle ville recherchez-vous ?",
     [
-        "🛒 Acheter un produit",
-        "🌱 Vendre un produit",
-        "🔎 Rechercher un produit"
+        "Kinshasa",
+        "Lubumbashi",
+        "Kisangani",
+        "Mbuji-Mayi",
+        "Kananga",
+        "Bukavu",
+        "Goma",
+        "Kolwezi",
+        "Matadi",
+        "Autre"
     ]
 )
 
-if choix == "🛒 Acheter un produit":
-    st.info("Vous pourrez rechercher les produits disponibles près de vous.")
+# Quantité souhaitée
+quantite = st.number_input(
+    "📦 Quantité souhaitée",
+    min_value=1,
+    value=1,
+    step=1
+)
 
-elif choix == "🌱 Vendre un produit":
-    st.info("Vous pourrez publier votre produit, sa quantité et son prix.")
+unite = st.selectbox(
+    "Unité",
+    ["kg", "sac", "tonne", "pièce", "tas"]
+)
 
-elif choix == "🔎 Rechercher un produit":
-    st.info("Vous pourrez rechercher un produit agricole par nom ou par ville.")
+if st.button("🔎 Rechercher"):
+    if produit.strip() == "":
+        st.warning("⚠️ Veuillez entrer le nom du produit.")
+    else:
+        st.success(
+            f"✅ Recherche lancée pour {produit} à {ville}."
+        )
 
-st.divider()
+        st.info(
+            f"Vous recherchez {quantite} {unite} de {produit}."
+        )
 
-st.caption("Agri Market RDC 🇨🇩")
+        st.write("🌱 Les produits disponibles apparaîtront ici.")
