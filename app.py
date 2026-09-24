@@ -51,12 +51,51 @@ if st.button("🔎 Rechercher"):
     if produit.strip() == "":
         st.warning("⚠️ Veuillez entrer le nom du produit.")
     else:
-        st.success(
-            f"✅ Recherche lancée pour {produit} à {ville}."
-        )
+        produits = {
+            "maïs": {
+                "prix": 2500,
+                "unite": "kg",
+                "quantite": 500
+            },
+            "manioc": {
+                "prix": 1500,
+                "unite": "kg",
+                "quantite": 800
+            },
+            "tomate": {
+                "prix": 3000,
+                "unite": "kg",
+                "quantite": 300
+            },
+            "oignon": {
+                "prix": 4000,
+                "unite": "kg",
+                "quantite": 250
+            },
+            "banane": {
+                "prix": 2000,
+                "unite": "kg",
+                "quantite": 400
+            }
+        }
 
-        st.info(
-            f"Vous recherchez {quantite} {unite} de {produit}."
-        )
+        recherche = produit.lower().strip()
 
-        st.write("🌱 Les produits disponibles apparaîtront ici.")
+        if recherche in produits:
+            p = produits[recherche]
+
+            st.success("✅ Produit disponible !")
+
+            st.subheader(f"🌱 {produit.capitalize()}")
+
+            st.write(f"📍 Ville : {ville}")
+            st.write(f"💰 Prix : {p['prix']:,} CDF / {p['unite']}")
+            st.write(f"📦 Quantité disponible : {p['quantite']} {p['unite']}")
+
+            st.button("📞 Contacter le producteur")
+
+        else:
+            st.info(
+                "ℹ️ Aucun produit trouvé pour le moment. "
+                "Essayez : maïs, manioc, tomate, oignon ou banane."
+)
