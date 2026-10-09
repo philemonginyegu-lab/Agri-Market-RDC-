@@ -9,93 +9,146 @@ st.set_page_config(
 st.title("🌾 Agri Market RDC")
 st.subheader("🔎 Rechercher un produit")
 
-st.write("Trouvez les produits agricoles disponibles près de vous.")
-
-# Recherche du produit
-produit = st.text_input(
-    "Quel produit recherchez-vous ?",
-    placeholder="Exemple : maïs, manioc, tomate..."
+st.write(
+    "Trouvez des produits agricoles et contactez "
+    "directement les producteurs."
 )
 
-# Choix de la ville
-ville = st.selectbox(
-    "📍 Dans quelle ville recherchez-vous ?",
-    [
-        "Kinshasa",
-        "Lubumbashi",
-        "Kisangani",
-        "Mbuji-Mayi",
-        "Kananga",
-        "Bukavu",
-        "Goma",
-        "Kolwezi",
-        "Matadi",
-        "Autre"
-    ]
+# Villes disponibles
+villes = [
+    "Kinshasa",
+    "Lubumbashi",
+    "Matadi",
+    "Mbuji-Mayi",
+    "Kananga",
+    "Kisangani",
+    "Goma",
+    "Bukavu"
+    "Kikwit"
+]
+
+# Données fictives pour tester l'application
+produits = [
+    {
+        "nom": "Manioc",
+        "ville": "Kinshasa",
+        "quantite": 200,
+        "prix": 1000,
+        "producteur": "Producteur Démo 1",
+        "telephone": ""
+    },
+    {
+        "nom": "Maïs",
+        "ville": "Kinshasa",
+        "quantite": 150,
+        "prix": 1800,
+        "producteur": "Producteur Démo 2",
+        "telephone": ""
+    },
+    {
+        "nom": "Haricots",
+        "ville": "Kinshasa",
+        "quantite": 80,
+        "prix": 2500,
+        "producteur": "Producteur Démo 3",
+        "telephone": ""
+    },
+    {
+        "nom": "Tomate",
+        "ville": "Lubumbashi",
+        "quantite": 100,
+        "prix": 2000,
+        "producteur": "Producteur Démo 4",
+        "telephone": ""
+    }
+]
+
+st.info(
+    "Les offres affichées ci-dessous sont fictives. "
+    "Elles servent uniquement à tester l'application."
 )
 
-# Quantité souhaitée
-quantite = st.number_input(
-    "📦 Quantité souhaitée",
-    min_value=1,
-    value=1,
-    step=1
-)
+with st.form("recherche_produit"):
 
-unite = st.selectbox(
-    "Unité",
-    ["kg", "sac", "tonne", "pièce", "tas"]
-)
+    recherche = st.text_input(
+        "Quel produit recherchez-vous ?",
+        placeholder="Ex. : manioc, maïs, tomate..."
+    )
 
-if st.button("🔎 Rechercher"):
-    if produit.strip() == "":
-        st.warning("⚠️ Veuillez entrer le nom du produit.")
+    ville = st.selectbox(
+        "Dans quelle ville ?",
+        villes
+    )
+
+    quantite = st.number_input(
+        "Quantité souhaitée (kg)",
+        min_value=1,
+        value=1,
+        step=1
+    )
+
+    rechercher = st.form_submit_button(
+        "🔎 Rechercher"
+    )
+
+if rechercher:
+
+    if not recherche.strip():
+        st.warning("Veuillez saisir le nom du produit.")
+
     else:
-        produits = {
-            "maïs": {
-                "prix": 2500,
-                "unite": "kg",
-                "quantite": 500
-            },
-            "manioc": {
-                "prix": 1500,
-                "unite": "kg",
-                "quantite": 800
-            },
-            "tomate": {
-                "prix": 3000,
-                "unite": "kg",
-                "quantite": 300
-            },
-            "oignon": {
-                "prix": 4000,
-                "unite": "kg",
-                "quantite": 250
-            },
-            "banane": {
-                "prix": 2000,
-                "unite": "kg",
-                "quantite": 400
-            }
-        }
+        resultats = [
+            p for p in produits
+            if recherche.strip().casefold()
+            in p["nom"].casefold()
+            and p["ville"] == ville
+            and p["quantite"] >= quantite
+        ]
 
-        recherche = produit.lower().strip()
+        if resultats:
+            st.success(
+                f"{len(resultats)} offre(s) trouvée(s)."
+            )
 
-        if recherche in produits:
-            p = produits[recherche]
+            for p in resultats:
 
-            st.success("✅ Produit disponible !")
+                st.markdown("---")
+                st.subheader(f"🌱 {p['nom']}")
 
-            st.subheader(f"🌱 {produit.capitalize()}")
+                st.write(f"📍 Ville : {p['ville']}")
+                st.write(
+                    f"📦 Quantité disponible : "
+                    f"{p['quantite']} kg"
+                )
+                st.write(
+                    f"💰 Prix au kg : "
+                    f"{p['prix']:,} CDF".replace(",", " ")
+                )
+                st.write(
+                    f"👨‍🌾 {p['producteur']}"
+                )
 
-            st.write(f"📍 Ville : {ville}")
-            st.write(f"💰 Prix : {p['prix']:,} CDF / {p['unite']}")
-            st.write(f"📦 Quantité disponible : {p['quantite']} {p['unite']}")
+                total = quantite * p["prix"]
 
-            st.button("📞 Contacter le producteur")
+                st.write(
+                    f"🧾 Coût estimé : "
+                    f"{total:,} CDF".replace(",", " ")
+                )
+
+                if p["telephone"]:
+                    st.link_button(
+                        "📞 Contacter le producteur",
+                        "https://wa.me/"
+                        + p["telephone"]
+                    )
+                else:
+                    st.caption(
+                        "Contact à enregistrer lors "
+                        "de l'inscription du producteur."
+                    )
 
         else:
-            st.info(
-                "ℹ️ Aucun produit trouvé pour le moment. "
-                "Essayez : maïs, manioc, tomate, oignon ou banane."
+            st.warning(
+                "Aucune offre correspondant à votre "
+                "recherche n'a été trouvée."
 )
