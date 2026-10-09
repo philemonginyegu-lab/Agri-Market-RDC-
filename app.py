@@ -23,7 +23,7 @@ villes = [
     "Kananga",
     "Kisangani",
     "Goma",
-    "Bukavu"
+    "Bukavu",
     "Kikwit"
 ]
 
@@ -60,7 +60,15 @@ produits = [
         "prix": 2000,
         "producteur": "Producteur Démo 4",
         "telephone": ""
-    }
+    },
+    {
+        "nom": "Maïs",
+        "ville": "Lubumbashi",
+        "quantite": 300,
+        "prix": 1500,
+        "producteur": "Producteur Démo 5",
+        "telephone": ""
+}
 ]
 
 st.info(
