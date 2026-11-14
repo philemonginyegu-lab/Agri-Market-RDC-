@@ -93,7 +93,7 @@ if enregistrer_producteur:
 
     else:
         try:
-            supabase.table("Producteurs").insert({
+            supabase.table("id_producteur").insert({
                 "nom_producteur": nom_producteur.strip(),
                 "ville": ville,
                 "contact": contact_producteur.strip()
