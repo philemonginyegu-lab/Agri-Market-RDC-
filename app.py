@@ -75,9 +75,8 @@ if enregistrer_producteur:
             st.write("Données enregistrées :")
             st.write(resultat.data)
 
-        except Exception as e:
-            st.error("Erreur lors de l'enregistrement du producteur.")
-            st.caption(str(e))
+       except Exception as e:
+            st.error(f"Erreur lors de l'enregistrement : {e}")
 
 # --------------------------------------------------
 # 2. ENREGISTRER UN PRODUIT
