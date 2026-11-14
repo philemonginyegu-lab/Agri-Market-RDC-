@@ -64,9 +64,9 @@ if enregistrer_producteur:
                 "contact": contact_producteur.strip()
             }).execute()
 
-            st.success("Producteur enregistré avec succès.")
-            st.write("Identifiant du producteur :")
-            st.code(str(resultat.data[0]["id_producteurs"]))
+st.success("Producteur enregistré avec succès.")
+st.write("Données enregistrées :")
+st.write(resultat.data)
 
         except Exception as e:
             st.error("Erreur lors de l'enregistrement du producteur.")
