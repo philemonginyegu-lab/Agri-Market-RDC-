@@ -104,10 +104,8 @@ if enregistrer_producteur:
             )
 
         except Exception as e:
-            st.error(
-                "Erreur lors de l'enregistrement du producteur."
-            )
-            st.caption(str(e))
+            st.error("ÉCHEC DE L'ENREGISTREMENT")
+            st.exception(e)
 
 
 # ==================================================
