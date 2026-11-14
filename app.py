@@ -67,13 +67,13 @@ if enregistrer_producteur:
         try:
             resultat = supabase.table("producteurs").insert({
         try:
-    reponse = supabase.table("producteurs").insert({
+            reponse = supabase.table("producteurs").insert({
         "nom": nom_producteur,
         "ville": ville_producteur,
         "contact": contact_producteur
     }).execute()
-
-    st.success("Producteur enregistré avec succès.")
+        }
+        st.success("Producteur enregistré avec succès.")
 
 except Exception as e:
     st.error(f"Erreur lors de l'enregistrement : {e}")
