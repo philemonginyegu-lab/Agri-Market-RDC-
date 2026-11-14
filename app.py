@@ -66,17 +66,17 @@ if enregistrer_producteur:
     else:
         try:
             resultat = supabase.table("producteurs").insert({
-                "nom_producteur": nom_producteur.strip(),
-                "ville": ville,
-                "contact": contact_producteur.strip()
-            }).execute()
+        try:
+    reponse = supabase.table("producteurs").insert({
+        "nom": nom_producteur,
+        "ville": ville_producteur,
+        "contact": contact_producteur
+    }).execute()
 
-            st.success("Producteur enregistré avec succès.")
-            st.write("Données enregistrées :")
-            st.write(resultat.data)
+    st.success("Producteur enregistré avec succès.")
 
-       except Exception as e:
-            st.error(f"Erreur lors de l'enregistrement : {e}")
+except Exception as e:
+    st.error(f"Erreur lors de l'enregistrement : {e}")
 
 # --------------------------------------------------
 # 2. ENREGISTRER UN PRODUIT
