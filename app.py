@@ -30,17 +30,36 @@ st.write(
 # 1. ENREGISTRER UN PRODUCTEUR
 # --------------------------------------------------
 
+st.divider()
+st.header("👨‍🌾 Enregistrer un producteur")
 
-autre_ville = ""
-if ville_producteur == "Autre":
-    autre_ville = st.text_input("Précisez la ville")
+with st.form("form_producteur"):
+    nom_producteur = st.text_input("Nom du producteur")
 
-enregistrer_producteur = st.form_submit_button(
-    "Enregistrer le producteur"
-)
+    ville_producteur = st.selectbox(
+        "Ville du producteur",
+        [
+            "Kinshasa", "Lubumbashi", "Matadi",
+            "Mbuji-Mayi", "Kananga", "Kisangani", "Autre"
+        ]
+    )
+
+    autre_ville = ""
+    if ville_producteur == "Autre":
+        autre_ville = st.text_input("Précisez la ville")
+
+    contact_producteur = st.text_input("Contact du producteur")
+
+    enregistrer_producteur = st.form_submit_button(
+        "Enregistrer le producteur"
+    )
 
 if enregistrer_producteur:
-    ville = autre_ville.strip() if ville_producteur == "Autre" else ville_producteur
+    ville = (
+        autre_ville.strip()
+        if ville_producteur == "Autre"
+        else ville_producteur
+    )
 
     if not nom_producteur.strip() or not contact_producteur.strip() or not ville:
         st.warning("Remplissez le nom, la ville et le contact.")
